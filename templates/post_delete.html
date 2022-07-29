@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <h1>Delete post</h1>
+    <p>Вы удаляете post - <b><i>"{{ post.title.upper }}"</i></b></p>
+    <form method="post">
+        {% csrf_token %}
+
+        <button class="btn btn-danger">Удалить</button>
+        <a class="btn btn-warning" href="{% url 'index' %}">Отменить</a>
+    </form>
+
+{% endblock %}

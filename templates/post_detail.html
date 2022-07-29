@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <h1>Detail post</h1>
+    <strong>{{ post.title }}</strong>
+    <p>{{ post.description }}</p>
+    <p>{{ post.created_at }}</p>
+    <hr>
+
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="" class="col-4">
+    {% else %}
+        <img src="/media/no-image.png" alt="" class="col-1">
+    {% endif %}
+
+    <hr>
+    <a class="btn btn-warning" href="{% url 'post_update' post.pk %}">Обновить</a>
+    <a class="btn btn-danger" href="{% url 'post_delete' post.pk %}">Удалить</a>
+    <a class="btn btn-info" href="{% url 'comment_add' post.pk %}">Добавить комментарий</a>
+
+    <hr>
+    {% if post.comments.all %}
+        <h4>Comments</h4>
+        {% for comment in post.comments.all %}
+            <p><b>{{ comment.created_at }}</b> - {{ comment.description }}</p>
+        {% endfor %}
+
+    {% else %}
+        <p>Комментарии отсутствуют</p>
+    {% endif %}
+
+{% endblock %}

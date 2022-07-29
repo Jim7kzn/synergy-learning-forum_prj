@@ -14,6 +14,37 @@
 
     {% block content %}
         <h1>проект "Форум"</h1>
+
+        <table class="table table-striped">
+            <div>
+                <a class="btn btn-primary" href="{% url 'post_create' %}">New post</a>
+            </div>
+
+            <thead>
+            <tr>
+                <th scope="col">Заголовок</th>
+                <th scope="col">Содержимое</th>
+                <th scope="row">Создано</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+                {% if object_list %}
+                    {% for post in object_list %}
+                        <tr>
+                            <td scope="row"><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></td>
+                            <td>{{ post.description }}</td>
+                            <td>{{ post.created_at }}</td>
+                            <td><a class="btn btn-warning" href="{% url 'post_update' post.pk %}">Обновить</a></td>
+                            <td><a class="btn btn-danger" href="{% url 'post_delete' post.pk %}">Удалить</a></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <p>No posts</p>
+                {% endif %}
+            </tbody>
+        </table>
     {% endblock %}
 
 </div>

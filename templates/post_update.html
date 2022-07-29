@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <h1>Detail post</h1>
+    <strong>{{ post.title }}</strong>
+    <p>{{ post.description }}</p>
+    <p>{{ post.created_at }}</p>
+    <hr>
+
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="" class="col-4">
+    {% else %}
+        <img src="/media/no-image.png" alt="" class="col-4">
+    {% endif %}
+
+    <hr>
+    <a class="btn btn-warning" href="">Обновить</a>
+    <a class="btn btn-danger" href="">Удалить</a>
+    <a class="btn btn-info" href="">Добавить комментарий</a>
+
+{% endblock %}
