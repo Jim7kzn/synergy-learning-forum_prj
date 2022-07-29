@@ -1,6 +1,8 @@
 from django.forms import ModelForm, fields, widgets
 from .models import Post, Comment
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 class PostForm(ModelForm):
@@ -21,4 +23,16 @@ class CommentForm(ModelForm):
         widgets = {
             'description': forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+
+class RegisterForm(UserCreationForm):
+    class Meta:
+        model = User
+        # fields = '__all__'
+        fields = [
+            'username',
+            'email',
+            'password1',
+            'password2',
+        ]
 

@@ -3,8 +3,9 @@ from django.shortcuts import render, redirect
 # Create your views here.
 from .models import Post, Comment
 from django.views.generic import ListView, DeleteView, CreateView, UpdateView, DetailView
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, RegisterForm
 from django.urls import reverse_lazy
+from django.contrib.auth.forms import UserCreationForm
 
 
 def index(request):
@@ -13,6 +14,13 @@ def index(request):
 
 def about(request):
     return render(request, 'about.html')
+
+
+class RegisterForm(CreateView):
+    template_name = 'register.html'
+    # form_class = UserCreationForm
+    form_class = RegisterForm
+    success_url = reverse_lazy('login')
 
 
 class PostsView(ListView):
