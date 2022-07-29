@@ -25,7 +25,7 @@ class CommentForm(ModelForm):
         }
 
 
-class RegisterForm(UserCreationForm):
+class UserRegisterForm(UserCreationForm):
     class Meta:
         model = User
         # fields = '__all__'
