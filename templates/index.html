@@ -16,6 +16,12 @@
         <h1>проект "Форум"</h1>
 
         <table class="table table-striped">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{message.tags}}" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
             <div>
                 <a class="btn btn-primary" href="{% url 'post_create' %}">New post</a>
             </div>
