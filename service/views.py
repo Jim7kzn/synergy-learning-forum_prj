@@ -6,8 +6,8 @@ from django.views.generic import ListView, DeleteView, CreateView, UpdateView, D
 from .forms import PostForm, CommentForm, UserRegisterForm
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
 def index(request):
@@ -15,6 +15,7 @@ def index(request):
 
 
 @login_required()
+# @permission_required('service.view_post')
 def about(request):
     return render(request, 'about.html')
 
@@ -38,20 +39,26 @@ class DetailPostView(DetailView):
     template_name = 'post_detail.html'
 
 
-class CreatePostView(LoginRequiredMixin, CreateView):
+# class CreatePostView(LoginRequiredMixin, CreateView):
+class CreatePostView(PermissionRequiredMixin, CreateView):
+    permission_required = 'service.add.post'
     model = Post
     template_name = 'post_create.html'
     form_class = PostForm
 
 
-class UpdatePostView(LoginRequiredMixin, UpdateView):
+# class UpdatePostView(LoginRequiredMixin, UpdateView):
+class UpdatePostView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'service.change.post'
     model = Post
     # template_name = 'post_update.html'
     template_name = 'post_create.html'
     form_class = PostForm
 
 
-class DeletePostView(LoginRequiredMixin, DeleteView):
+# class DeletePostView(LoginRequiredMixin, DeleteView):
+class DeletePostView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'service.delete.post'
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('index')
