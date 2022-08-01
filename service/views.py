@@ -1,15 +1,17 @@
 from django.shortcuts import render, redirect
+from django.conf import settings
 
 # Create your views here.
 from .models import Post, Comment
 from django.views.generic import ListView, DeleteView, CreateView, UpdateView, DetailView
-from .forms import PostForm, CommentForm, UserRegisterForm
+from .forms import PostForm, CommentForm, UserRegisterForm, MessageForm
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.mail import send_mail
 
 
 def index(request):
@@ -19,7 +21,19 @@ def index(request):
 @login_required()
 # @permission_required('service.view_post')
 def about(request):
-    return render(request, 'about.html')
+    form = MessageForm()
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data.get('subject')
+            body = form.cleaned_data.get('body')
+            try:
+                send_mail(subject, body, settings.EMAIL_HOST_USER, ['it@rfprt.ru'], fail_silently=False)
+                form.save()
+            except Exception as err:
+                print(str(err))
+            return redirect('about')
+    return render(request, 'about.html', {'form': form})
 
 
 class RegisterForm(SuccessMessageMixin, CreateView):

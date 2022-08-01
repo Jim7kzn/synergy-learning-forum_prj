@@ -1,5 +1,5 @@
 from django.forms import ModelForm, fields, widgets
-from .models import Post, Comment
+from .models import Post, Comment, Message
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -36,3 +36,12 @@ class UserRegisterForm(UserCreationForm):
             'password2',
         ]
 
+
+class MessageForm(ModelForm):
+    class Meta:
+        model = Message
+        fields = '__all__'
+        widgets = {
+            'subject': forms.TextInput(attrs={'class': 'form-control'}),
+            'body': forms.Textarea(attrs={'class': 'form-control'}),
+        }

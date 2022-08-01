@@ -32,3 +32,17 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse('index')
+
+
+class Message(models.Model):
+    objects = models.Manager
+
+    subject = models.CharField(verbose_name='тема сообщения', max_length=255, null=True, blank=True)
+    body = models.TextField(verbose_name='текст сообщения')
+    created_at = models.DateTimeField(verbose_name='дата создания', auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.title}'
+
+    # def get_absolute_url(self):
+    #     return reverse('index')
