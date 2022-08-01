@@ -1,0 +1,17 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <h3>UPLOAD PAGE</h3>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="upl_file">Загрузить файл</label>
+        <input type="file" name="upl_file" id="upl_file">
+        <br>
+        <button class="btn btn-success">Загрузить файл</button>
+    </form>
+
+    {% if url %}
+        <a href="{{ url }}" target="_blank">{{ url }}</a>
+    {% endif %}
+
+{% endblock %}
