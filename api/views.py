@@ -1,16 +1,30 @@
 from django.shortcuts import render
+from django.contrib.auth.models import User
 from .models import Checkbox
 from .serializers import CheckboxSerializer
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework import authentication, permissions
+from rest_framework import generics, mixins
+
 
 # Create your views here.
 
 # class CheckboxViewSet(viewsets.ModelViewSet):
 #     queryset = Checkbox.objects.all()
 #     serializer_class = CheckboxSerializer
+
+
+class UserList(APIView):
+    # authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAdminUser]
+
+    def get(self, request, format=None):
+        users = [user.username for user in User.objects.all()]
+        return Response(users)
 
 
 @api_view(['GET'])
