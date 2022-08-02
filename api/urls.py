@@ -14,5 +14,6 @@ urlpatterns = [
     path('cbup/<int:pk>', views.checkbox_update, name='cbup'),
     path('cbdel/<int:pk>', views.checkbox_delete, name='cbdel'),
     path('ul/', views.UserList.as_view(), name='ul'),
+    path('data', views.DataView.as_view()),
 ]
 

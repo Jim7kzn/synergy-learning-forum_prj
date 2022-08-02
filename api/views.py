@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from .models import Checkbox
-from .serializers import CheckboxSerializer
+from .serializers import CheckboxSerializer, DataSerializer
 from rest_framework import viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -76,3 +76,11 @@ def checkbox_delete(request, pk):
     checkbox.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+class DataView(APIView):
+    @staticmethod
+    def get(request):
+        serializer = DataSerializer(data=request.query_params)
+        serializer.is_valid(raise_exception=True)
+        params = serializer.validated_data
+        return Response({'params': params})
