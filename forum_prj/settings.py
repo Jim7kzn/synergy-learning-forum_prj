@@ -37,9 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'service.apps.ServiceConfig',
+    'django.contrib.staticfiles',  # required for serving swagger ui's css/js files
     'crispy_forms',
+    'drf_yasg',
+    'service.apps.ServiceConfig',
     'rest_framework',
     'api.apps.ApiConfig',
 ]

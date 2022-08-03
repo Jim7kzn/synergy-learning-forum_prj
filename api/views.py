@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from .models import Checkbox
 from .serializers import CheckboxSerializer, DataSerializer
 from rest_framework import viewsets
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -13,9 +13,14 @@ from rest_framework import generics, mixins
 
 # Create your views here.
 
-# class CheckboxViewSet(viewsets.ModelViewSet):
-#     queryset = Checkbox.objects.all()
-#     serializer_class = CheckboxSerializer
+class CheckboxViewSet(viewsets.ModelViewSet):
+    queryset = Checkbox.objects.all()
+    serializer_class = CheckboxSerializer
+
+    @action(detail=False, methods='get')
+    def limit(self, request, pk):
+        params = request.query_params
+        return Response({'result': params})
 
 
 class UserList(APIView):
