@@ -1,3 +1,5 @@
+import logging
+
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from .models import Checkbox
@@ -13,6 +15,9 @@ from rest_framework import generics, mixins
 
 # Create your views here.
 
+logger = logging.getLogger('django')
+
+
 class CheckboxViewSet(viewsets.ModelViewSet):
     queryset = Checkbox.objects.all()
     serializer_class = CheckboxSerializer
@@ -20,6 +25,7 @@ class CheckboxViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods='get')
     def limit(self, request, pk):
         params = request.query_params
+        logger.debug(f'Params: {params}')
         return Response({'result': params})
 
 
